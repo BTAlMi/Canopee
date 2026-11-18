@@ -1,7 +1,7 @@
 /* Canopée — service worker : fonctionnement hors ligne.
    Page : réseau d'abord, copie en cache si hors ligne. Autres fichiers : cache d'abord.
    Incrémenter VERSION à chaque mise à jour publiée. */
-const VERSION = 'canopee-v1.1.0';
+const VERSION = 'canopee-v1.1.1';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k.startsWith('canopee-') && k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
